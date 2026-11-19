@@ -92,6 +92,8 @@ async function deleteDoctor(id) {
     );
   }
 
+  const Appointment = require('../models/Appointment');
+  await Appointment.deleteMany({ doctor: id });
   await doctor.deleteOne();
   return { id };
 }

@@ -26,9 +26,14 @@ const remove = asyncHandler(async (req, res) => {
   res.json({ message: 'Patient deleted' });
 });
 
+const addNote = asyncHandler(async (req, res) => {
+  const patient = await patientService.addNote(req.params.id, req.body.body);
+  res.status(201).json({ message: 'Note added', data: patient });
+});
+
 const filterOptions = asyncHandler(async (_req, res) => {
   const options = await patientService.getFilterOptions();
   res.json({ data: options });
 });
 
-module.exports = { list, getOne, create, update, remove, filterOptions };
+module.exports = { list, getOne, create, update, remove, addNote, filterOptions };

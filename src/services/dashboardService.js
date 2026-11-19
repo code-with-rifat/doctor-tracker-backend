@@ -1,5 +1,6 @@
 const Doctor = require('../models/Doctor');
 const Patient = require('../models/Patient');
+const appointmentService = require('./appointmentService');
 
 async function getStats() {
   const now = new Date();
@@ -19,6 +20,7 @@ async function getStats() {
     patientsLast12Months,
     patientsByCondition,
     topSpecializations,
+    upcomingAppointments,
   ] = await Promise.all([
     Doctor.countDocuments(),
     Patient.countDocuments(),
@@ -112,6 +114,7 @@ async function getStats() {
         },
       },
     ]),
+    appointmentService.countUpcoming(),
   ]);
 
   const averagePatientsPerDoctor =
@@ -142,6 +145,7 @@ async function getStats() {
       totalPatients,
       patientsThisMonth,
       averagePatientsPerDoctor,
+      upcomingAppointments,
     },
     charts: {
       patientsPerDoctor,

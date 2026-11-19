@@ -11,7 +11,12 @@ const patientBodySchema = z.object({
     .max(20)
     .regex(/^[+\d][\d\s\-()]+$/, 'Enter a valid phone number'),
   condition: z.string().trim().min(2, 'Condition is required').max(120),
+  status: z.enum(['Active', 'Discharged']).optional(),
   doctor: z.string().optional(),
+});
+
+const noteBodySchema = z.object({
+  body: z.string().trim().min(2, 'Note is too short').max(1000),
 });
 
 const patientQuerySchema = z.object({
@@ -24,4 +29,4 @@ const patientQuerySchema = z.object({
   to: z.string().optional(),
 });
 
-module.exports = { patientBodySchema, patientQuerySchema };
+module.exports = { patientBodySchema, patientQuerySchema, noteBodySchema };

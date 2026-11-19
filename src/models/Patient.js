@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+const noteSchema = new mongoose.Schema({
+  body: { type: String, required: true, trim: true, maxlength: 1000 },
+  createdAt: { type: Date, default: Date.now },
+});
+
 const patientSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
@@ -11,6 +16,12 @@ const patientSchema = new mongoose.Schema(
     },
     phone: { type: String, required: true, trim: true },
     condition: { type: String, required: true, trim: true },
+    status: {
+      type: String,
+      enum: ['Active', 'Discharged'],
+      default: 'Active',
+    },
+    notes: { type: [noteSchema], default: [] },
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Doctor',
